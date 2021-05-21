@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FileTransfer.iml" filepath="$PROJECT_DIR$/FileTransfer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/WifiP2P.iml" filepath="$PROJECT_DIR$/.idea/modules/WifiP2P.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/YZxing-lib/WifiP2P.YZxing-lib.iml" filepath="$PROJECT_DIR$/.idea/modules/YZxing-lib/WifiP2P.YZxing-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/WifiP2P.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/WifiP2P.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/indexablerecyclerview/WifiP2P.indexablerecyclerview.iml" filepath="$PROJECT_DIR$/.idea/modules/indexablerecyclerview/WifiP2P.indexablerecyclerview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/WifiP2P.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/WifiP2P.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/xrecyclerview/WifiP2P.xrecyclerview.iml" filepath="$PROJECT_DIR$/.idea/modules/xrecyclerview/WifiP2P.xrecyclerview.iml" />
     </modules>
   </component>
 </project>

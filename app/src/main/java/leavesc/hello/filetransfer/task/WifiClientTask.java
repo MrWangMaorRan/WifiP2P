@@ -4,6 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.qrcode.Constant;
+import com.luck.picture.lib.tools.ToastUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +18,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import leavesc.hello.filetransfer.SendFileActivity;
 import leavesc.hello.filetransfer.common.Constants;
 import leavesc.hello.filetransfer.model.FileTransfer;
 import leavesc.hello.filetransfer.util.Md5Util;
@@ -86,6 +91,7 @@ public class WifiClientTask extends AsyncTask<String, Integer, Boolean> {
             Log.e(TAG, "文件发送成功");
             return true;
         } catch (Exception e) {
+
             Log.e(TAG, "文件发送异常 Exception: " + e.getMessage());
         } finally {
             if (socket != null && !socket.isClosed()) {

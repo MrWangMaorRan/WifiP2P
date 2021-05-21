@@ -1,3 +1,121 @@
 <resources>
     <string name="app_name">WifiP2P</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="user_name">username</string>
+    <string name="password">password</string>
+    <string name="log_in">Log in</string>
+    <string name="title_activity_main">MVP Example</string>
+    <string name="username_error">Username cannot be empty</string>
+    <string name="password_error">Password cannot be empty</string>
+
+    <string name="title_clues">线索</string>
+    <string name="title_app_name">一点通</string>
+    <string name="hint_app_name">一点即通，海量线索等你发现</string>
+    <string name="login">登录</string>
+    <string name="agree_agreement">阅读并同意《一点通用户协议》</string>
+
+    <string name="input_hint_phone_num">请输入手机号</string>
+    <string name="input_hint_verification_code">请输入验证码</string>
+    <string name="send_verification_code">发送验证码</string>
+    <string name="re_send">重新发送</string>
+    <string name="my_business">我的企业</string>
+    <string name="setting">设置</string>
+    <string name="clues_list">线索列表</string>
+    <string name="clues_list_1">(</string>
+    <string name="clues_list_2">)</string>
+    <string name="clues_sorting">排序</string>
+    <string name="clues_screening">筛选</string>
+
+    <string name="txt_label">标签：</string>
+    <string name="gender">性别：</string>
+    <string name="phone_number">手机号码：</string>
+    <string name="num_attribution_place">号码归属地：</string>
+    <string name="we_chat_num">微信号：</string>
+    <string name="industry">行业：</string>
+    <string name="birth_date">生日：</string>
+    <string name="describe">描述：</string>
+
+    <string name="communication_record">沟通记录</string>
+    <string name="make_call">拨打电话</string>
+    <string name="follow_up_records">跟进记录</string>
+    <string name="operator">操作人：</string>
+    <string name="call_type">拨打方式：</string>
+    <string name="operating_time">操作时间：</string>
+    <string name="voice_recording">通话录音：</string>
+
+    <string name="personal_info">个人信息</string>
+    <string name="head_portrait">头像</string>
+    <string name="name">姓名</string>
+    <string name="phone_no">手机号</string>
+
+    <string name="company_info">企业信息</string>
+    <string name="company_name">企业名称</string>
+    <string name="company_address">企业所在地</string>
+    <string name="company_industry">所属行业</string>
+    <string name="employees_count">员工数量</string>
+    <string name="company_area">所在地区</string>
+    <string name="other">其他</string>
+
+    <string name="version_update">版本更新</string>
+    <string name="sip_login_state">Sip账号状态</string>
+    <string name="login_out">退出登录</string>
+
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="re_set">重置</string>
+    <string name="save">保存</string>
+    <string name="call_phone">拨打电话</string>
+    <string name="loading_dialog_text">加载中...</string>
+
+    <string name="calling2">接通中</string>
+    <string name="calling_err">呼叫失败</string>
+    <string name="calling">呼叫中...</string>
+    <string name="system_calling">本机系统接通</string>
+    <string name="early_media">对方正在响铃...</string>
+    <string name="calling_time">通话时长：</string>
+    <string name="calling_end">通话结束：</string>
+    <string name="customer_property">客户性别</string>
+    <string name="customer_intention">客户意向</string>
+    <string name="customer_emotion">客户情绪</string>
+    <string name="user_defined">自定义</string>
+    <string name="customer_we_char_num">客户微信号</string>
+    <string name="hint_input_we_char_num">请输入微信号</string>
+    <string name="customer_phone_num">客户手机号</string>
+    <string name="hint_input_phone_num">请输入手机号</string>
+    <string name="save_and_finish">保存并结束</string>
+    <string name="speak_on">免提</string>
+    <string name="hang_up">挂断</string>
+    <string name="continuous_call">自动拨打列表下一个</string>
+
+    <string name="edit_info">编辑信息</string>
+    <string name="virtual_number_display">虚拟号显示</string>
+    <string name="number_attribution_place">号码归属地</string>
+    <string name="gender_2">性别</string>
+    <string name="industry_2">行业</string>
+    <string name="birthday">生日</string>
+    <string name="we_chat_num_2">微信号</string>
+    <string name="phone_num_2">手机号</string>
+    <string name="describe_2">描述</string>
+    <string name="please_input_describe">请输入描述</string>
+    <string name="customer_label">客户标签</string>
+    <string name="contact_later">稍后联系</string>
+    <string name="have_intention">有意向</string>
+    <string name="considering">考虑中</string>
+    <string name="please_input">请输入...</string>
+
+    <string name="alarm_call_time">账号剩余通话时长少于30分钟，请联系运维人员\n</string>
+    <string name="phone_num_err_txt">手机号码有误，请重新输入</string>
+    <string name="verification_code_err_txt">验证码有误，请重新输入</string>
+
+    <string name="normal">常用筛选</string>
+
+    <string name="click_search_phone">点击搜索手机号</string>
+    <string name="confirm_to_add">确认添加</string>
+    <string name="checked_all">全选</string>
+    <string name="contact_is_add">已添加</string>
+    <string name="call_next">连续拨打</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

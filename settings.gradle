@@ -1,1 +1,6 @@
+include ':indexablerecyclerview'
+include ':xrecyclerview'
+include ':library'
+include ':indexablerecyclerview'
+include ':YZxing-lib'
 include ':app'

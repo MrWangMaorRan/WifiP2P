@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import leavesc.hello.filetransfer.MainActivity;
 import leavesc.hello.filetransfer.R;
 
 /**
@@ -54,7 +53,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         holder.tv_deviceName.setText(wifiP2pDeviceList.get(position).deviceName);
         holder.tv_deviceAddress.setText(wifiP2pDeviceList.get(position).deviceAddress);
-        holder.tv_deviceDetails.setText(MainActivity.getDeviceStatus(wifiP2pDeviceList.get(position).status));
+       // holder.tv_deviceDetails.setText(MainActivity.getDeviceStatus(wifiP2pDeviceList.get(position).status));
         holder.itemView.setTag(position);
     }
 
@@ -67,13 +66,13 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
         this.clickListener = clickListener;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tv_deviceName;
+        public TextView tv_deviceName;
 
-        private TextView tv_deviceAddress;
+        public TextView tv_deviceAddress;
 
-        private TextView tv_deviceDetails;
+        public TextView tv_deviceDetails;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -81,7 +80,9 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
             tv_deviceAddress = itemView.findViewById(R.id.tv_deviceAddress);
             tv_deviceDetails = itemView.findViewById(R.id.tv_deviceDetails);
         }
-
+        public void autoClick(){
+            tv_deviceName.performClick();
+        }
     }
 
 }

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">QrCode</string>
+    <string name="scanner_view_tip_text">对准二维码/条形码到框内即可扫描</string>
+    <string name="check_net">当前网络不可用\n请检查网络设置</string>
+</resources>
