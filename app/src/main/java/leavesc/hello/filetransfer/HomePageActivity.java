@@ -1,45 +1,64 @@
 package leavesc.hello.filetransfer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import com.bytedance.sdk.openadsdk.AdSlot;
+import com.bytedance.sdk.openadsdk.DislikeInfo;
+import com.bytedance.sdk.openadsdk.FilterWord;
+import com.bytedance.sdk.openadsdk.PersonalizationPrompt;
+import com.bytedance.sdk.openadsdk.TTAdConstant;
+import com.bytedance.sdk.openadsdk.TTAdDislike;
+import com.bytedance.sdk.openadsdk.TTAdNative;
+import com.bytedance.sdk.openadsdk.TTAdSdk;
+import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
+import com.bytedance.sdk.openadsdk.TTNativeExpressAd;
 import com.example.qrcode.Constant;
 import com.example.qrcode.ScannerActivity;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import com.lwy.righttopmenu.MenuItem;
+import com.lwy.righttopmenu.RightTopMenu;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import leavesc.hello.filetransfer.Banners.BannerExpressActivity;
+import leavesc.hello.filetransfer.Banners.DislikeDialog;
+import leavesc.hello.filetransfer.Banners.TTAdManagerHolder;
+import leavesc.hello.filetransfer.Banners.TToast;
+import leavesc.hello.filetransfer.duoyuyan.BaseActivity_two;
+import leavesc.hello.filetransfer.duoyuyan.Config;
+import leavesc.hello.filetransfer.duoyuyan.LanguageUtils;
+import leavesc.hello.filetransfer.duoyuyan.Store;
 import leavesc.hello.filetransfer.telephone.PermissinsUtils_one;
 import leavesc.hello.filetransfer.util.DisplayUtil;
 import leavesc.hello.filetransfer.util.PermissinsUtils;
+import leavesc.hello.filetransfer.util.SharedPreferencesUtil;
 
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends BaseActivity {
 
     public static final  String ACTION_BONED = "ACTION_BONED";
 
@@ -51,16 +70,207 @@ public class HomePageActivity extends AppCompatActivity {
     private Dialog mShareDialog;
     private Button old;
     private Button news;
+    private ImageView mMenuIV;
+    private RightTopMenu mRightTopMenu;
+    private TTNativeExpressAd mTTAd;
 
+    public FrameLayout express_container;
+    private long startTime = 0;
+    private boolean mHasShowDownloadActive = false;
+    private Context mContext;
+    private TTAdNative mTTAdNative;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-
+        TTAdManagerHolder.get().requestPermissionIfNecessary(this);
         onTobat();
-        onDialog();
+        String ok = SharedPreferencesUtil.getSharedPreferences(HomePageActivity.this).getString("OK", "");
+        if (ok==null||!ok.equals("123")){
+            onDialog();
+        }
         initView();
+        initBanners();
         onButtonListener();
+    }
+
+    private void initBanners() {
+        express_container = findViewById(R.id.express_container);
+        mContext = this.getApplicationContext();
+        //创建TTAdNative对象，createAdNative(Context context) context需要传入Activity对象
+        TTAdManagerHolder.init(this);
+        mTTAdNative = TTAdSdk.getAdManager().createAdNative(this);
+        //step3:(可选，强烈建议在合适的时机调用):申请部分权限，如read_phone_state,防止获取不了imei时候，下载类广告没有填充的问题。
+
+
+
+        //step4:创建广告请求参数AdSlot,具体参数含义参考文档
+        AdSlot adSlot = new AdSlot.Builder()
+                .setCodeId("946200858") //广告位id
+                .setAdCount(1) //请求广告数量为1到3条
+                .setExpressViewAcceptedSize(FrameLayout.LayoutParams.MATCH_PARENT, 150) //期望模板广告view的size,单位dp
+                .build();
+        mTTAdNative.loadBannerExpressAd(adSlot, new TTAdNative.NativeExpressAdListener() {
+            //请求失败回调
+            @Override
+            public void onError(int code, String message) {
+                Log.i("失败",code+""+message);
+            }
+
+            //请求成功回调
+            @Override
+            public void onNativeExpressAdLoad(List<TTNativeExpressAd> ads) {
+                if (ads == null || ads.size() == 0) {
+                    return;
+                }
+                Log.i("请求成功","成");
+                Log.i("请求成功",ads.size()+"");
+                mTTAd = ads.get(0);
+                mTTAd.setSlideIntervalTime(30 * 1000);
+                if (mTTAd!=null){
+                    mTTAd.render();
+                    bindAdListener(mTTAd);
+
+                }
+
+                startTime = System.currentTimeMillis();
+                TToast.show(mContext, "load success!");
+            }
+        });
+
+    }
+    private void bindAdListener(TTNativeExpressAd ad) {
+        ad.setExpressInteractionListener(new TTNativeExpressAd.ExpressAdInteractionListener() {
+            @Override
+            public void onAdClicked(View view, int type) {
+                TToast.show(mContext, "广告被点击");
+            }
+
+            @Override
+            public void onAdShow(View view, int type) {
+                TToast.show(mContext, "广告展示");
+            }
+
+            @Override
+            public void onRenderFail(View view, String msg, int code) {
+                Log.e("ExpressView", "render fail:" + (System.currentTimeMillis() - startTime));
+                TToast.show(mContext, msg + " code:" + code);
+            }
+
+            @Override
+            public void onRenderSuccess(View view, float width, float height) {
+                Log.e("ExpressView", view+"");
+                //返回view的宽高 单位 dp
+                TToast.show(mContext, "渲染成功");
+                if (view!=null){
+                    express_container .removeAllViews();
+                    express_container.addView(view);
+                }
+
+            }
+        });
+        //dislike设置
+        bindDislike(ad, false);
+        if (ad.getInteractionType() != TTAdConstant.INTERACTION_TYPE_DOWNLOAD) {
+            return;
+        }
+        ad.setDownloadListener(new TTAppDownloadListener() {
+            @Override
+            public void onIdle() {
+                TToast.show(mContext, "点击开始下载", Toast.LENGTH_LONG);
+            }
+
+            @Override
+            public void onDownloadActive(long totalBytes, long currBytes, String fileName, String appName) {
+                if (!mHasShowDownloadActive) {
+                    mHasShowDownloadActive = true;
+                    TToast.show(mContext, "下载中，点击暂停", Toast.LENGTH_LONG);
+                }
+            }
+
+            @Override
+            public void onDownloadPaused(long totalBytes, long currBytes, String fileName, String appName) {
+                TToast.show(mContext, "下载暂停，点击继续", Toast.LENGTH_LONG);
+            }
+
+            @Override
+            public void onDownloadFailed(long totalBytes, long currBytes, String fileName, String appName) {
+                TToast.show(mContext, "下载失败，点击重新下载", Toast.LENGTH_LONG);
+            }
+
+            @Override
+            public void onInstalled(String fileName, String appName) {
+                TToast.show(mContext, "安装完成，点击图片打开", Toast.LENGTH_LONG);
+            }
+
+            @Override
+            public void onDownloadFinished(long totalBytes, String fileName, String appName) {
+                TToast.show(mContext, "点击安装", Toast.LENGTH_LONG);
+            }
+        });
+    }
+
+    /**
+     * 设置广告的不喜欢，开发者可自定义样式
+     * @param ad
+     * @param customStyle 是否自定义样式，true:样式自定义
+     */
+    private void bindDislike (TTNativeExpressAd ad,boolean customStyle){
+        if (customStyle) {
+            //使用自定义样式，用户选择"为什么看到此广告"，开发者需要执行startPersonalizePromptActivity逻辑进行跳转
+            final DislikeInfo dislikeInfo = ad.getDislikeInfo();
+            if (dislikeInfo == null || dislikeInfo.getFilterWords() == null || dislikeInfo.getFilterWords().isEmpty()) {
+                return;
+            }
+            final DislikeDialog dislikeDialog = new DislikeDialog(this, dislikeInfo);
+            dislikeDialog.setOnDislikeItemClick(new DislikeDialog.OnDislikeItemClick() {
+                @Override
+                public void onItemClick(FilterWord filterWord) {
+                    //屏蔽广告
+                    TToast.show(mContext, "点击 " + filterWord.getName());
+                    //用户选择不喜欢原因后，移除广告展示
+                    express_container.removeAllViews();
+                }
+            });
+            dislikeDialog.setOnPersonalizationPromptClick(new DislikeDialog.OnPersonalizationPromptClick() {
+                @Override
+                public void onClick(PersonalizationPrompt personalizationPrompt) {
+                    TToast.show(mContext, "点击了为什么看到此广告");
+                }
+            });
+            ad.setDislikeDialog(dislikeDialog);
+            return;
+        }
+        //使用默认模板中默认dislike弹出样式
+        ad.setDislikeCallback(HomePageActivity.this, new TTAdDislike.DislikeInteractionCallback() {
+            @Override
+            public void onShow() {
+
+            }
+
+
+
+            @Override
+            public void onSelected(int position, String value, boolean enforce) {
+                TToast.show(HomePageActivity.this, "点击 " + value);
+                express_container.removeAllViews();
+                //用户选择不喜欢原因后，移除广告展示
+                if (enforce) {
+                    TToast.show(HomePageActivity.this, "模版Banner 穿山甲sdk强制将view关闭了");
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                TToast.show(mContext, "点击取消 ");
+            }
+
+
+
+
+        });
+//            //使用默认模板中默认dislike弹出样式
+
     }
 
     private void onButtonListener() {
@@ -173,64 +383,66 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
         consent.setOnClickListener(new View.OnClickListener() {
+
+            private String ok="123";
+
             @Override
             public void onClick(View v) {
                 mShareDialog.dismiss();
+                SharedPreferencesUtil.getSharedPreferences(HomePageActivity.this).putString("OK",ok);
             }
         });
     }
-
+    //在Activity的onDestroy回调方法中销毁广告对象
+    @Override
+    protected void onDestroy () {
+        super.onDestroy();
+        if (mTTAd != null) {
+            mTTAd.destroy();
+        }
+    }
     public void  onTobat(){
-        Toolbar tobar = findViewById(R.id.tobar);
-        tobar.setTitle("");
-        setSupportActionBar(tobar);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        }
-    }
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // groupId--1:分组的id;itemId--100:菜单项的id;order--1:菜单项排序用的;title--"菜单1":菜单名称;
-        //MenuItem item = menu.add(1, 100, 1, "菜单项");
-        // 在API>=11时，是不显示图标的
-       // item.setIcon(R.drawable.ic_launcher);
+        mMenuIV = findViewById(R.id.menu_iv);
+        mMenuIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<MenuItem> menuItems = new ArrayList<>();
+                menuItems.add(new MenuItem(R.mipmap.fenxiang, getResources().getString(R.string.Share_with_friends), 100));
+                menuItems.add(new MenuItem(R.mipmap.pinglun,getResources().getString(R.string.Rate_us), 0));
+                menuItems.add(new MenuItem(R.mipmap.yinsi, getResources().getString(R.string.Privacy_Policy)));
+                menuItems.add(new MenuItem(R.mipmap.xieyi, getResources().getString(R.string.Terms_of_Service)));
+                if (mRightTopMenu == null) {
+                    Log.i("点击了","点击了");
+                    mRightTopMenu = new RightTopMenu.Builder(HomePageActivity.this)
+//                            .windowHeight(480)     //当菜单数量大于3个时，为wrap_content,反之取默认高度320
+//                        .windowWidth()      //默认宽度wrap_content
+                            .dimBackground(true)           //背景变暗，默认为true
+                            .needAnimationStyle(true)   //显示动画，默认为true
+                            .animationStyle(R.style.RTM_ANIM_STYLE)  //默认为R.style.RTM_ANIM_STYLE
 
-        menu.add(1, 101, 1, "分享给好友");
-        menu.add(1, 102, 1, "给个好评");
-        menu.add(1, 103, 1, "隐私政策");
-        menu.add(1, 103, 1, "用户协议");
+                            .menuItems(menuItems)
+                            .onMenuItemClickListener(new RightTopMenu.OnMenuItemClickListener() {
+                                @Override
+                                public void onMenuItemClick(int position) {
+                                    final String[] cities = {getString(R.string.lan_chinese), getString(R.string.lan_en),getString(R.string.lan_zh_rTYW),getString(R.string.Follow_the_system)};
+                                    final String[] locals = {"zh_CN", "en","zh_TW","111"};
+                                    if (position==0){
+                                        Toast.makeText(HomePageActivity.this, "点击菜单:" + 0, Toast.LENGTH_SHORT).show();
+                                    }else if (position==1){
+                                        Toast.makeText(HomePageActivity.this, "点击菜单:" + 1, Toast.LENGTH_SHORT).show();
+                                    }else if (position==2){
+                                        Toast.makeText(HomePageActivity.this, "点击菜单:" + 2, Toast.LENGTH_SHORT).show();
+                                    }else if (position==3){
+                                        Toast.makeText(HomePageActivity.this, "点击菜单:" + 3, Toast.LENGTH_SHORT).show();
+                                       // Duoyuyan();
+                                    }
 
-        return true;
-    }
+                                }
+                            }).build();
+                }
+                mRightTopMenu.showAsDropDown(mMenuIV, 0, 0);
+            }
+        });
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // 创建菜单项的点击事件
-        switch (item.getItemId()) {
-            case 101:
-                Toast.makeText(this, "你点击了分享", Toast.LENGTH_SHORT).show();
-                break;
-            case 102:
-                Toast.makeText(this, "你点击了好评", Toast.LENGTH_SHORT).show();
-                break;
-            case 103:
-                Intent intent = new Intent(HomePageActivity.this, AgreementActivity.class);
-                startActivity(intent);
-                Toast.makeText(this, "你点击了隐私政策", Toast.LENGTH_SHORT).show();
-                break;
-            case 104:
-                Intent intent1 = new Intent(HomePageActivity.this, AgreementActivity.class);
-                startActivity(intent1);
-                Toast.makeText(this, "你点击了用户协议", Toast.LENGTH_SHORT).show();
-                break;
-
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

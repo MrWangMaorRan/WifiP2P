@@ -106,7 +106,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="确认添加"
+                android:text="@string/confirm_to_add"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>

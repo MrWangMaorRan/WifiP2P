@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@id/download_img_back"
         android:layout_marginLeft="30dp"
-        android:text=" 快捷下载 "
+        android:text="@string/Quick_Download"
         android:textSize="20sp"
         android:textColor="#333333"/>
     <ImageView
@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="旧设备安装手机克隆"
+            android:text="@string/install"
             android:textColor="#333333"
             android:textSize="20sp" />
     </LinearLayout>
@@ -60,7 +60,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="或在应用商城搜索 “手机克隆” 找到我们"
+            android:text="@string/yingyong"
             android:textColor="#666666"
             android:textSize="15sp" />
     </LinearLayout>

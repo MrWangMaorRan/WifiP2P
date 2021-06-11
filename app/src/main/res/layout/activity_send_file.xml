@@ -28,7 +28,7 @@ tools:context=".ReceiveFileActivity">
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="10dp"
-        android:text=" 选择传输文件 "
+        android:text="@string/neirong"
         android:textSize="20sp"
         android:textColor="#333333"/>
 </LinearLayout>
@@ -53,7 +53,7 @@ tools:context=".ReceiveFileActivity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="通讯录"
+        android:text="@string/Contacts"
         android:textColor="#333333"
         android:textSize="20sp"/>
     <ImageView
@@ -111,7 +111,7 @@ tools:context=".ReceiveFileActivity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="相册    "
+        android:text="@string/Gallery"
         android:textColor="#333333"
         android:textSize="20sp"/>
     <ImageView
@@ -142,7 +142,7 @@ tools:context=".ReceiveFileActivity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="日历   "
+        android:text="@string/Calendar"
         android:textColor="#333333"
         android:textSize="20sp"/>
     <ImageView
@@ -170,7 +170,7 @@ tools:context=".ReceiveFileActivity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="文档   "
+        android:text="@string/Documents"
         android:textColor="#333333"
         android:textSize="20sp"/>
     <ImageView
@@ -188,7 +188,7 @@ tools:context=".ReceiveFileActivity">
         android:id="@+id/btn_start_transfer"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:text="开始传输"
+        android:text="@string/Start_transfer"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:background="@drawable/button_start"/>

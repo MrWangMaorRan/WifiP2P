@@ -68,8 +68,7 @@ public class PickContactActivityOne extends BaseActivity_one implements IPickCon
     @Override
     public void init(Bundle savedInstanceState) {
         ButterKnife.bind(this);
-       PermissinsUtils_one.getPermission(this);
-       PermissinsUtils.getPermission(this);
+
         pickContactPresenter = new PickContactPresenter(mContext, this);
         // init adapter
         pickContactPresenter.initAdapter(indexableLayout);
@@ -94,6 +93,8 @@ public class PickContactActivityOne extends BaseActivity_one implements IPickCon
                 pickContactPresenter.checkedAll();
                 break;
             case R.id.ll_add:
+                PermissinsUtils_one.getPermission(this);
+                PermissinsUtils.getPermission(this);
                List<ContactBean> sList = pickContactPresenter.importContacts();
                 Toast.makeText(PickContactActivityOne.this,"电话簿"+sList.get(0).getPhone(),Toast.LENGTH_LONG).show();
                 Intent intent = getIntent();

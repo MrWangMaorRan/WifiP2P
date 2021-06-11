@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/WifiP2P.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/WifiP2P.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/indexablerecyclerview/WifiP2P.indexablerecyclerview.iml" filepath="$PROJECT_DIR$/.idea/modules/indexablerecyclerview/WifiP2P.indexablerecyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/WifiP2P.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/WifiP2P.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/righttopmenu/WifiP2P.righttopmenu.iml" filepath="$PROJECT_DIR$/.idea/modules/righttopmenu/WifiP2P.righttopmenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/xrecyclerview/WifiP2P.xrecyclerview.iml" filepath="$PROJECT_DIR$/.idea/modules/xrecyclerview/WifiP2P.xrecyclerview.iml" />
     </modules>
   </component>

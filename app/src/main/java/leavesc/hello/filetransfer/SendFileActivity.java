@@ -43,6 +43,7 @@ import leavesc.hello.filetransfer.callback.DirectActionListener;
 import leavesc.hello.filetransfer.common.LoadingDialog;
 import leavesc.hello.filetransfer.model.FileTransfer;
 import leavesc.hello.filetransfer.task.WifiClientTask;
+import leavesc.hello.filetransfer.telephone.ContactBean;
 import leavesc.hello.filetransfer.telephone.PermissinsUtils_one;
 import leavesc.hello.filetransfer.telephone.PickContactActivityOne;
 import leavesc.hello.filetransfer.util.GetRealPath;
@@ -97,7 +98,6 @@ public class SendFileActivity extends BaseActivity {
         @Override
         public void onDisconnection() {
             Log.e(TAG, "onDisconnection");
-
             showToast("处于非连接状态");
             wifiP2pDeviceList.clear();
             deviceAdapter.notifyDataSetChanged();
@@ -137,8 +137,6 @@ public class SendFileActivity extends BaseActivity {
                     Log.i("deviceAddress22", s);
                     Log.i("homeAddress", result);
                     if (deviceName != null && s.equalsIgnoreCase(result)) {
-
-                        Log.i("aaaaaaaa", a + "");
                         if (a == 0) {
                             a = 1;
                             connect(deviceAddress1);
@@ -317,9 +315,12 @@ public class SendFileActivity extends BaseActivity {
 
     private void getIntenty(Intent data) {
         Bundle extras = data.getExtras();
-        Serializable telephone = getIntent().getSerializableExtra("telephone");
-        Log.i("telephone","收到了");
+        List<ContactBean> telephone = (List<ContactBean>) getIntent().getSerializableExtra("telephone");
+        Log.i("telephone","telephone");
+        for (int i = 0; i <telephone.size() ; i++) {
+            ContactBean contactBean = telephone.get(i);
 
+        }
     }
 
     private void Data(Intent data){

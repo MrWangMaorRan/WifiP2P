@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class DownloadActivity extends AppCompatActivity {
+import leavesc.hello.filetransfer.duoyuyan.BaseActivity_two;
+
+public class DownloadActivity extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
